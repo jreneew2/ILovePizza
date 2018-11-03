@@ -28,9 +28,16 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     done = True
+                elif event.type == pygame.KEYDOWN:
+                    passKey = event.key
+                    self.getInput(passKey)
+                    
             screen.blit(text, ((width/2)-60, height/2))
             pygame.display.update()
             pygame.display.flip()
+            
+    def getInput(self, passKey):
+        print("wubbalubbadubudub")
 
 def main():
     Game()

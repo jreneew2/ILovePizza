@@ -19,7 +19,7 @@ class Game:
         clock = pygame.time.Clock()
 
         myfont = pygame.font.SysFont('Times New Roman MS', 30)
-        text = myfont.render("I'm Pickle Drew", 0, (255, 50, 20))
+        text = myfont.render("Wegman's Official Game OwO", 0, (255, 50, 20))
 
         done = False
 

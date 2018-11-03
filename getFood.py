@@ -18,10 +18,25 @@ try:
 except Exception as e:
     print("[Errno {0}] {1}".format(e.errno, e.strerror))
 
+def getPrice(sku):
+        try:
+            conn.request("GET", "/products/" + sku + "/prices/1?api-version=2018-10-18&%s" % params, "{body}", headers)
+            response = conn.getresponse()
+            skuData = response.read()
+            conn.close()
+        except Exception as e:
+            print("[Errno {0}] {1}".format(e.errno, e.strerror))
+        skuPrice = json.loads(skuData)
+        newPrice = str(json.loads(json.dumps(skuPrice['price'])))
+        #newPrice = newPrice.split("'price:' ", 5)
+        return newPrice
+
 recipe = json.loads(data)
 ingredients = json.loads(json.dumps(recipe['ingredients']))
 
 print('Recipe: ' + recipe['name'])
 print('Ingredients: ')
 for ingredient in ingredients:
-    print(ingredient['name'] + ' ' + ingredient['price'])
+    price = getPrice(str(ingredient['sku']))
+    print(ingredient['name'] + ' ' + str(price))
+

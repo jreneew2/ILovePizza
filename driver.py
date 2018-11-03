@@ -1,13 +1,14 @@
 import pygame
 
 class Game:
+    done = False
+    height = 540
+    width = 1080
     def __init__(self):
         pygame.init()
-        height = 540
-        width = 1080
-        screen = pygame.display.set_mode((1080, 540))
+        screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption('Pizza Game')
-        bgcolor = (0, 0, 255)
+        bgcolor = (255, 255, 255)
 
         background = pygame.Surface(screen.get_size())
         background = background.convert()
@@ -16,14 +17,12 @@ class Game:
         screen.blit(background, (0,0))
         pygame.display.flip()
 
-        clock = pygame.time.Clock()
-
         myfont = pygame.font.SysFont('Times New Roman MS', 30)
         text = myfont.render("Wegman's Official Game OwO", 0, (255, 50, 20))
 
-        done = False
+        clock = pygame.time.Clock()
 
-        while not done:
+        while not self.done:
             clock.tick(60)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -32,12 +31,13 @@ class Game:
                     passKey = event.key
                     self.getInput(passKey)
                     
-            screen.blit(text, ((width/2)-60, height/2))
+            screen.blit(text, ((self.width/2)-60, self.height/2))
             pygame.display.update()
             pygame.display.flip()
             
     def getInput(self, passKey):
-        print("wubbalubbadubudub")
+        if passKey == pygame.K_q:
+            self.done = True
 
 def main():
     Game()

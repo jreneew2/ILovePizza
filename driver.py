@@ -9,8 +9,8 @@ class Game:
         pygame.init()
         screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption('Pizza Game')
-        bgcolor = (255, 255, 255)
 
+        bgcolor = (255, 255, 255)
         background = pygame.Surface(screen.get_size())
         background = background.convert()
         background.fill(bgcolor)
@@ -34,17 +34,23 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     passKey = event.key
                     self.getInput(passKey)
+                #elif event.type == pygame.KEYUP:
+                    #print("hello")
                     
             #screen.blit(text, ((self.width/2)-60, self.height/2))
             self.p.draw(screen)
             pygame.display.update()
             pygame.display.flip()
+            screen.blit(background, (0,0))
             
     def getInput(self, passKey):
         if passKey == pygame.K_q:
             self.done = True
         if passKey == pygame.K_UP or passKey == pygame.K_DOWN or passKey == pygame.K_LEFT or passKey == pygame.K_RIGHT:
             self.p.move(passKey)
+            
+
+            
 
 def main():
     Game()

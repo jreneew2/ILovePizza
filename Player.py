@@ -42,3 +42,4 @@ class Player(pygame.sprite.Sprite):
                 self.rect.x -= 10
                 
         screen.blit(self.image, (self.rect.x, self.rect.y))
+

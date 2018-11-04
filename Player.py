@@ -49,8 +49,6 @@ class Player(pygame.sprite.Sprite):
             self.image, self.rect = load_png('playerl.png')
             self.rect.x = previousRect.x
             self.rect.y = previousRect.y
-            print(self.rect.x)
-            print(self.rect.y)
         elif(right):
             self.velX = self.speed
             self.image, self.rect = load_png('playerr.png')

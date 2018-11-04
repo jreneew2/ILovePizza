@@ -2,6 +2,7 @@ import pygame
 from Player import Player
 from Enemy import Enemy
 from Shelf import Shelf
+from Button import Button
 from Item import Item
 import json
 import random
@@ -11,6 +12,8 @@ class Game:
     done = False
     height = 720
     width = 1280
+    timer = 0
+    winnerFlag = False
     recipes = list()
     def __init__(self):
         pygame.init()
@@ -54,6 +57,12 @@ class Game:
         shelves.append(self.s2)
         shelves.append(self.s3)
         shelves.append(self.s4)
+
+        buttonYes = Button(True)
+        buttonNo = Button(False)
+        buttonYes.setCords(200, 200)
+        buttonNo.setCords(600, 200)
+
         
         myfont = pygame.font.SysFont('Times New Roman MS', 30)
         recipeTitle = myfont.render(recipeName, 0, (255, 50, 255))
@@ -80,6 +89,11 @@ class Game:
         while not self.done:
             timedelta = clock.tick(60)
             timedelta = timedelta / 1000
+
+            self.timer = self.timer + timedelta
+            timerRender = myfont.render(str(round(self.timer, 1)), True, (0, 0, 0))
+            screen.blit(timerRender, (self.width - 50, 25))
+
             keystate = pygame.key.get_pressed()
             self.p.input(keystate[pygame.K_w], keystate[pygame.K_s], keystate[pygame.K_a], keystate[pygame.K_d])
             self.p.calc_pos(timedelta, shelves)
@@ -105,7 +119,25 @@ class Game:
                     ingredientsText.pop(0)
                     itemFound = False
                 else:
-                    self.done = True
+                    if(not self.winnerFlag):
+                        recordTime = self.timer
+                        winner = myfont.render('You completed a level in ' + str(recordTime)[0:4] + ' seconds! Nice! Would you like to play another level?' , 0, (0, 0, 0))
+                        screen.blit(winner, (0, self.height / 2))
+                        self.winnerFlag = True
+                    else:
+                        screen.blit(winner, (0, self.height / 2))
+                        buttonNo.draw(screen)
+                        buttonYes.draw(screen)
+                        for event in pygame.event.get():
+                            if event.type == pygame.MOUSEBUTTONDOWN:
+                                mouse = pygame.mouse.get_pos()
+                                if buttonYes.pressed(mouse):
+                                    self.__init__()
+                                if buttonNo.pressed(mouse):
+                                    print("NO")
+                                    self.done = True
+
+                    #self.done = true
             if(keystate[pygame.K_SPACE] and (rect_distance(self.p.rect, index.rect) < 30)):
                     itemFound = True
 
@@ -138,7 +170,6 @@ class Game:
         randomRecipeIngredients = list(recipes.values())[randomPick]
         del recipes[randomRecipeName]
         return (randomRecipeName, randomRecipeIngredients)
-            
 
 def rect_distance(rect1, rect2):
     x1, y1 = rect1.topleft

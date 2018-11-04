@@ -43,7 +43,7 @@ class Game:
         self.s4.draw(screen)
         
         myfont = pygame.font.SysFont('Times New Roman MS', 30)
-        text = myfont.render(recipeName, 0, (255, 50, 20))
+        recipeTitle = myfont.render(recipeName, 0, (255, 50, 255))
         ingredientsText = list()
         for k, v in ingredients.items():
             ingredientsText.append(myfont.render(k + ": $" + str(v), 0, (255, 50, 20)))
@@ -67,7 +67,7 @@ class Game:
             self.s2.draw(screen)
             self.s3.draw(screen)
             self.s4.draw(screen)       
-            screen.blit(text, (10, 10))
+            screen.blit(recipeTitle, (10, 10))
             x = 30
             for text in ingredientsText:
                 screen.blit(text, (10, x))

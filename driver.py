@@ -5,6 +5,7 @@ from Shelf import Shelf
 from Item import Item
 import json
 import random
+import math
 
 class Game:
     done = False
@@ -57,9 +58,14 @@ class Game:
             itemsOnShelf.append(Item(self.s1.rect, self.s2.rect, self.s3.rect, self.s4.rect))
 
         for item in itemsOnShelf:
-            item.draw(screen, item.findValidPos())
+            item.findValidPos()
 
         clock = pygame.time.Clock()
+
+        index = random.choice(itemsOnShelf)
+        isPresent = True
+        itemFound = False
+        finishedRecipe = False
         while not self.done:
             timedelta = clock.tick(60)
             timedelta = timedelta / 1000
@@ -75,12 +81,22 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     passKey = event.key
                     self.getInput(passKey)
-            for item in itemsOnShelf:
-                item.draw(screen, (item.posX, item.posY))
             self.s1.draw(screen)
             self.s2.draw(screen)
             self.s3.draw(screen)
-            self.s4.draw(screen)       
+            self.s4.draw(screen)
+            if(isPresent):
+                index.draw(screen, (item.posX, item.posY))
+            if(itemFound):
+                if itemsOnShelf:
+                    index = random.choice(itemsOnShelf)
+                    itemsOnShelf.remove(index)
+                    itemFound = False
+                else:
+                    self.done = True
+            if(keystate[pygame.K_SPACE] and (rect_distance(self.p.rect, index.rect) < 30)):
+                    itemFound = True
+
             screen.blit(recipeTitle, (10, 10))
             x = 30
             for text in ingredientsText:
@@ -112,7 +128,42 @@ class Game:
         return (randomRecipeName, randomRecipeIngredients)
             
 
-            
+def rect_distance(rect1, rect2):
+    x1, y1 = rect1.topleft
+    x1b, y1b = rect1.bottomright
+    x2, y2 = rect2.topleft
+    x2b, y2b = rect2.bottomright
+    left = x2b < x1
+    right = x1b < x2
+    top = y2b < y1
+    bottom = y1b < y2
+    if bottom and left:
+        print('bottom left')
+        return math.hypot(x2b-x1, y2-y1b)
+    elif left and top:
+        print('top left')
+        return math.hypot(x2b-x1, y2b-y1)
+    elif top and right:
+        print('top right')
+        return math.hypot(x2-x1b, y2b-y1)
+    elif right and bottom:
+        print('bottom right')
+        return math.hypot(x2-x1b, y2-y1b)
+    elif left:
+        print('left')
+        return x1 - x2b
+    elif right:
+        print('right')
+        return x2 - x1b
+    elif top:
+        print('top')
+        return y1 - y2b
+    elif bottom:
+        print('bottom')
+        return y2 - y1b
+    else:  # rectangles intersect
+        print('intersection')
+        return 0
 
 def main():
     Game()

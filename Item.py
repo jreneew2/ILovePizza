@@ -31,9 +31,12 @@ class Item(pygame.sprite.Sprite):
             randY = random.randint(self.shelf4.top, self.shelf4.bottom)
         self.posX = randX
         self.posY = randY
+        self.rect.x = randX
+        self.rect.y = randY
         print('X: ' + str(self.posX))
         print('Y: ' + str(self.posY))
 
     def draw(self, screen, pos):
         screen.blit(self.image, (self.posX, self.posY))
+        pygame.draw.rect(screen, (0, 0, 255), self.rect, 2)
 

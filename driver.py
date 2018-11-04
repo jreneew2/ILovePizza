@@ -1,6 +1,7 @@
 import pygame
 from Player import Player
 from Shelf import Shelf
+from Item import Item
 import json
 import random
 
@@ -45,8 +46,13 @@ class Game:
         myfont = pygame.font.SysFont('Times New Roman MS', 30)
         recipeTitle = myfont.render(recipeName, 0, (255, 50, 255))
         ingredientsText = list()
+        itemsOnShelf = list()
         for k, v in ingredients.items():
             ingredientsText.append(myfont.render(k + ": $" + str(v), 0, (255, 50, 20)))
+            itemsOnShelf.append(Item(self.s1.rect, self.s2.rect, self.s3.rect, self.s4.rect))
+
+        for item in itemsOnShelf:
+            item.draw(screen, item.findValidPos())
 
         clock = pygame.time.Clock()
         while not self.done:
@@ -62,7 +68,8 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     passKey = event.key
                     self.getInput(passKey)
-
+            for item in itemsOnShelf:
+                item.draw(screen, (item.posX, item.posY))
             self.s1.draw(screen)
             self.s2.draw(screen)
             self.s3.draw(screen)

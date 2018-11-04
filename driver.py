@@ -1,15 +1,22 @@
 import pygame
 from Player import Player
 from Shelf import Shelf
+import json
+import random
 
 class Game:
     done = False
     height = 720
     width = 1280
+    recipes = list()
     def __init__(self):
         pygame.init()
         screen = pygame.display.set_mode((self.width, self.height))
         pygame.display.set_caption('Pizza Game')
+
+        recipeName, ingredients = self.genRecipe()
+        print(recipeName)
+        print(ingredients)
 
         bgcolor = (255, 255, 255)
         background = pygame.image.load("bg_image.jpg")
@@ -35,8 +42,12 @@ class Game:
         self.s3.draw(screen)
         self.s4.draw(screen)
         
-        #myfont = pygame.font.SysFont('Times New Roman MS', 30)
-        #text = myfont.render("Wegman's Official Game OwO", 0, (255, 50, 20))
+        myfont = pygame.font.SysFont('Times New Roman MS', 30)
+        text = myfont.render(recipeName, 0, (255, 50, 20))
+        ingredientsText = list()
+        for k, v in ingredients.items():
+            ingredientsText.append(myfont.render(k + ": $" + str(v), 0, (255, 50, 20)))
+
         clock = pygame.time.Clock()
         while not self.done:
             timedelta = clock.tick(60)
@@ -56,7 +67,11 @@ class Game:
             self.s2.draw(screen)
             self.s3.draw(screen)
             self.s4.draw(screen)       
-            #screen.blit(text, ((self.width/2)-60, self.height/2))
+            screen.blit(text, (10, 10))
+            x = 30
+            for text in ingredientsText:
+                screen.blit(text, (10, x))
+                x = x + 30
             pygame.display.update()
             screen.blit(background, (0,0))
 
@@ -72,16 +87,15 @@ class Game:
         with open('data.json') as data:
             recipe = json.load(data)
             data.close()
-        for key, value in recipe.items() :
-            recipes.append(key)
-        return recipes
+        return recipe
 
     def genRecipe(self):
         recipes = self.loadRecipes()
-        randomPick = random.randint(0, len(recipes))
-        randomRecipe = recipes[randomPick]
-        print(randomRecipe)
-        return randomRecipe
+        randomPick = random.randint(0, len(recipes) - 1)
+        randomRecipeName = list(recipes.keys())[randomPick]
+        randomRecipeIngredients = list(recipes.values())[randomPick]
+        del recipes[randomRecipeName]
+        return (randomRecipeName, randomRecipeIngredients)
             
 
             

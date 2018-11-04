@@ -63,6 +63,22 @@ class Game:
         if passKey == pygame.K_UP or passKey == pygame.K_DOWN or passKey == pygame.K_LEFT or passKey == pygame.K_RIGHT:
             print("key")
             #self.p.move(passKey)
+
+    def loadRecipes(self):
+        recipes = list()
+        with open('data.json') as data:
+            recipe = json.load(data)
+            data.close()
+        for key, value in recipe.items() :
+            recipes.append(key)
+        return recipes
+
+    def genRecipe(self):
+        recipes = self.loadRecipes()
+        randomPick = random.randint(0, len(recipes))
+        randomRecipe = recipes[randomPick]
+        print(randomRecipe)
+        return randomRecipe
             
 
             

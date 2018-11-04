@@ -5,7 +5,10 @@ import random
 class Item(pygame.sprite.Sprite):
     def __init__(self, shelf1, shelf2, shelf3, shelf4): 
         pygame.sprite.Sprite.__init__(self)
-        self.image, self.rect = load_png('item.png')
+        foodchoices = ['Apple', 'Avocado', 'Bacon', 'Beer', 'Bread', 'Brownie', 'Cheese', 'Cherry', 'Chicken', 'Cookie', 'Eggs', 'Fish', 'Honey', 'Jam', 'Lemon', 'MelonHoneydew', 'Onion', 'Pickle', 'Sushi']
+        self.image, self.rect = load_png('food/' + random.choice(foodchoices) + '.png')
+        self.image = pygame.transform.scale(self.image, (40, 40))
+        self.rect = self.image.get_rect()
         self.shelf1 = shelf1
         self.shelf2 = shelf2
         self.shelf3 = shelf3
@@ -38,5 +41,5 @@ class Item(pygame.sprite.Sprite):
 
     def draw(self, screen, pos):
         screen.blit(self.image, (self.posX, self.posY))
-        pygame.draw.rect(screen, (0, 0, 255), self.rect, 2)
+        #pygame.draw.rect(screen, (0, 0, 255), self.rect, 2)
 

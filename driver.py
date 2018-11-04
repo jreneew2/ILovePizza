@@ -4,8 +4,8 @@ from Shelf import Shelf
 
 class Game:
     done = False
-    height = 540
-    width = 1080
+    height = 720
+    width = 1280
     def __init__(self):
         pygame.init()
         screen = pygame.display.set_mode((self.width, self.height))
@@ -25,12 +25,15 @@ class Game:
         self.s1 = Shelf(0)
         self.s2 = Shelf(1)
         self.s3 = Shelf(2)
+        self.s4 = Shelf(3)
         shelfSprite1 = pygame.sprite.RenderPlain(self.s1)
         shelfSprite2 = pygame.sprite.RenderPlain(self.s2)
         shelfSprite3 = pygame.sprite.RenderPlain(self.s3)
+        shelfSprite4 = pygame.sprite.RenderPlain(self.s4)
         self.s1.draw(screen)
         self.s2.draw(screen)
         self.s3.draw(screen)
+        self.s4.draw(screen)
         
         #myfont = pygame.font.SysFont('Times New Roman MS', 30)
         #text = myfont.render("Wegman's Official Game OwO", 0, (255, 50, 20))
@@ -51,7 +54,8 @@ class Game:
 
             self.s1.draw(screen)
             self.s2.draw(screen)
-            self.s3.draw(screen)        
+            self.s3.draw(screen)
+            self.s4.draw(screen)       
             #screen.blit(text, ((self.width/2)-60, self.height/2))
             pygame.display.update()
             screen.blit(background, (0,0))

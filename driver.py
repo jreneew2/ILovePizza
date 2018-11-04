@@ -1,5 +1,6 @@
 import pygame
 from Player import Player
+from Enemy import Enemy
 from Shelf import Shelf
 from Item import Item
 import json
@@ -29,6 +30,10 @@ class Game:
         self.p = Player()
         playerSprite = pygame.sprite.RenderPlain(self.p)
         self.p.draw(screen)
+
+        self.e = Enemy()
+        enemySprite = pygame.sprite.RenderPlain(self.e)
+        self.e.draw(screen)
 
         self.s1 = Shelf(0)
         self.s2 = Shelf(1)
@@ -62,6 +67,8 @@ class Game:
             self.p.input(keystate[pygame.K_w], keystate[pygame.K_s], keystate[pygame.K_a], keystate[pygame.K_d])
             self.p.calc_pos(timedelta)
             self.p.draw(screen)
+            self.e.calc_pos(timedelta)
+            self.e.draw(screen)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.done = True

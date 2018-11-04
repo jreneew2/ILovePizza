@@ -1,5 +1,6 @@
 import pygame
 from Player import Player
+from Shelf import Shelf
 
 class Game:
     done = False
@@ -21,8 +22,19 @@ class Game:
         self.p = Player()
         playerSprite = pygame.sprite.RenderPlain(self.p)
         self.p.draw(screen)
-        myfont = pygame.font.SysFont('Times New Roman MS', 30)
-        text = myfont.render("Wegman's Official Game OwO", 0, (255, 50, 20))
+
+        self.s1 = Shelf(0)
+        self.s2 = Shelf(1)
+        self.s3 = Shelf(2)
+        shelfSprite1 = pygame.sprite.RenderPlain(self.s1)
+        shelfSprite2 = pygame.sprite.RenderPlain(self.s2)
+        shelfSprite3 = pygame.sprite.RenderPlain(self.s3)
+        self.s1.draw(screen)
+        self.s2.draw(screen)
+        self.s3.draw(screen)
+        
+        #myfont = pygame.font.SysFont('Times New Roman MS', 30)
+        #text = myfont.render("Wegman's Official Game OwO", 0, (255, 50, 20))
         clock = pygame.time.Clock()
         while not self.done:
             timedelta = clock.tick(60)
@@ -37,8 +49,11 @@ class Game:
                 elif event.type == pygame.KEYDOWN:
                     passKey = event.key
                     self.getInput(passKey)
-                    
-            screen.blit(text, ((self.width/2)-60, self.height/2))
+
+            self.s1.draw(screen)
+            self.s2.draw(screen)
+            self.s3.draw(screen)        
+            #screen.blit(text, ((self.width/2)-60, self.height/2))
             pygame.display.update()
             screen.blit(background, (0,0))
 

@@ -43,6 +43,12 @@ class Game:
         self.s2.draw(screen)
         self.s3.draw(screen)
         self.s4.draw(screen)
+
+        shelves = list()
+        shelves.append(self.s1)
+        shelves.append(self.s2)
+        shelves.append(self.s3)
+        shelves.append(self.s4)
         
         myfont = pygame.font.SysFont('Times New Roman MS', 30)
         recipeTitle = myfont.render(recipeName, 0, (255, 50, 255))
@@ -66,7 +72,7 @@ class Game:
             timedelta = timedelta / 1000
             keystate = pygame.key.get_pressed()
             self.p.input(keystate[pygame.K_w], keystate[pygame.K_s], keystate[pygame.K_a], keystate[pygame.K_d])
-            self.p.calc_pos(timedelta)
+            self.p.calc_pos(timedelta, shelves)
             self.p.draw(screen)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

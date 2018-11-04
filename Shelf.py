@@ -7,7 +7,7 @@ class Shelf(pygame.sprite.Sprite):
         self.image, self.rect = load_png('shelf.png')
 
         self.image = pygame.transform.scale(self.image, (100, 500))
-
+        self.rect = self.image.get_rect()
         if shelfnum == 0:
             self.x = 180
             self.y = 128

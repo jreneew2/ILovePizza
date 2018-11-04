@@ -83,7 +83,7 @@ class Player(pygame.sprite.Sprite):
             self.velX = self.diagspeed
             self.velY = self.diagspeed       
 
-    def calc_pos(self, deltatime):
+    def calc_pos(self, deltatime, shelfs):
         if(self.rect.right > self.area.width or self.rect.left < 0):
             if(self.rect.right > self.area.width):
                 if(self.velX > 0):
@@ -99,6 +99,23 @@ class Player(pygame.sprite.Sprite):
                 if(self.velY < 0):
                     self.velY = 0
 
+        for shelf in shelfs:
+            retVal = collide(self.rect, shelf.rect)
+            print(retVal)
+            if(retVal == 'top'):
+                if(self.velY < 0):
+                    self.velY = 0
+            if(retVal == 'bottom'):
+                if(self.velY > 0):
+                    self.velY = 0
+            if(retVal == 'left'):
+                if(self.velX > 0):
+                    self.velX = 0
+            if(retVal == 'right'):
+                if(self.velX < 0):
+                    self.velX = 0
+
+
         self.velX = self.velX + self.accX * deltatime
         self.velY = self.velY + self.accY * deltatime
 
@@ -111,5 +128,29 @@ class Player(pygame.sprite.Sprite):
         screen.blit(self.image, (self.posX - self.image.get_width() / 2, self.posY - self.image.get_height() / 2))
         #pygame.draw.rect(pygame.display.get_surface(), (0, 255, 0), self.rect, 2)
 
+def collide(r1,r2):
+    dx=(r1.x+r1.w/2)-(r2.x+r2.w/2)
+    dy=(r1.y+r1.h/2)-(r2.y+r2.h/2)
+    width=(r1.w+r2.w)/2
+    height=(r1.h+r2.h)/2
+    crossWidth=width*dy
+    crossHeight=height*dx
+    collision='none'
+    
+    if(abs(dx)<=width and abs(dy)<=height):
+        wy = width * dy
+        hx = height * dx
+
+        if(wy > hx):
+            if(wy > -hx):
+                return 'top'
+            else:
+                return 'left'
+        else:
+            if(wy > -hx):
+                return 'right'
+            else:
+                return 'bottom'
+    return(collision)
         
 

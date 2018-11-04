@@ -1,5 +1,6 @@
 import pygame
 from Player import Player
+from Shelf import Shelf
 
 class Game:
     done = False
@@ -21,6 +22,17 @@ class Game:
         self.p = Player()
         playerSprite = pygame.sprite.RenderPlain(self.p)
         self.p.draw(screen)
+
+        self.s1 = Shelf(0)
+        self.s2 = Shelf(1)
+        self.s3 = Shelf(2)
+        shelfSprite1 = pygame.sprite.RenderPlain(self.s1)
+        shelfSprite2 = pygame.sprite.RenderPlain(self.s2)
+        shelfSprite3 = pygame.sprite.RenderPlain(self.s3)
+        self.s1.draw(screen)
+        self.s2.draw(screen)
+        self.s3.draw(screen)
+        
         pygame.display.update()
         pygame.display.flip()
         #myfont = pygame.font.SysFont('Times New Roman MS', 30)
@@ -42,6 +54,9 @@ class Game:
                 pygame.display.update()
                 pygame.display.flip()
                 screen.blit(background, (0,0))
+            self.s1.draw(screen)
+            self.s2.draw(screen)
+            self.s3.draw(screen)
             
     def getInput(self, passKey):
         if passKey == pygame.K_q:

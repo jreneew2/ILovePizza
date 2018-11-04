@@ -32,11 +32,11 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, screen):
         if self.isMoving:
-            if self.key == pygame.K_UP and self.rect.y > 10:
+            if self.key == pygame.K_UP and self.rect.y > 0:
                 self.rect.y -= 10
-            elif self.key == pygame.K_DOWN and self.rect.y < 500:
+            elif self.key == pygame.K_DOWN and self.rect.y < 400:
                 self.rect.y += 10
-            elif self.key == pygame.K_RIGHT and self.rect.x < 1000:
+            elif self.key == pygame.K_RIGHT and self.rect.x < 950:
                 self.rect.x += 10
             elif self.key == pygame.K_LEFT and self.rect.x > 10:
                 self.rect.x -= 10

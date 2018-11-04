@@ -21,6 +21,8 @@ class Game:
         self.p = Player()
         playerSprite = pygame.sprite.RenderPlain(self.p)
         self.p.draw(screen)
+        pygame.display.update()
+        pygame.display.flip()
         #myfont = pygame.font.SysFont('Times New Roman MS', 30)
         #text = myfont.render("Wegman's Official Game OwO", 0, (255, 50, 20))
 
@@ -35,7 +37,7 @@ class Game:
                     self.getInput(passKey)
                     
             #screen.blit(text, ((self.width/2)-60, self.height/2))
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN and passKey != pygame.K_q:
                 self.p.draw(screen)
                 pygame.display.update()
                 pygame.display.flip()

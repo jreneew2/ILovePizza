@@ -19,7 +19,7 @@ class Game:
         print(ingredients)
 
         bgcolor = (255, 255, 255)
-        background = pygame.image.load("bg_image.jpg")
+        background = pygame.image.load("bg_image.png")
         background = pygame.transform.scale(background, (self.width, self.height))
 
         screen.blit(background, (0,0))

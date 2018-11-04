@@ -5,7 +5,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
         #pygame.display.init()
-        self.image, self.rect = load_png('kang.png')
+        self.image, self.rect = load_png('playerr.png')
 
         self.isMoving = False
         self.key = pygame.K_m #can't create an empty variable or something smh
@@ -28,24 +28,41 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = self.posY - self.image.get_height() / 2
 
     def input(self, up, down, left, right):
+        lastangle = 0
         if(up):
-            self.velY = -self.speed
-        elif(down):
             self.velY = self.speed
+            self.image, self.rect = load_png('playert.png')
+        elif(down):
+            self.velY = -self.speed
+            self.image, self.rect = load_png('playerd.png')
         else:
             self.velY = 0
         if(left):
-            self.velX = -self.speed
-        elif(right):
             self.velX = self.speed
+            self.image, self.rect = load_png('playerl.png')
+        elif(right):
+            self.velX = -self.speed
+            self.image, self.rect = load_png('playerr.png')
         else:
             self.velX = 0
 
+        if(up and right):
+            self.image, self.rect = load_png('playertr.png')
+        elif(up and left):
+            self.image, self.rect = load_png('playertl.png')
+        elif(down and left):
+            self.image, self.rect = load_png('playerdl.png')
+        elif(down and right):
+            self.image, self.rect = load_png('playerdr.png')
+            
+
     def calc_pos(self, deltatime):
         if(self.rect.right >= self.area.width or self.rect.left <= 0):
-            self.velX = self.velX * -1
+            print("out on sides")
+            self.velX = 0
         if(self.rect.bottom >= self.area.height or self.rect.top <= 0):
-            self.velY = self.velY * -1
+            print("out on top or bottom")
+            self.velY = 0
 
         self.velX = self.velX + self.accX * deltatime
         self.velY = self.velY + self.accY * deltatime
@@ -55,13 +72,9 @@ class Player(pygame.sprite.Sprite):
 
         self.update_bounds()
 
-        print("velX: " + str(self.velX))
-        print("velY: " + str(self.velY))
-        print("posX: " + str(self.posX))
-        print("posY: " + str(self.posY))
-
     def draw(self, screen): 
         screen.blit(self.image, (self.posX - self.image.get_width() / 2, self.posY - self.image.get_height() / 2))
+        pygame.draw.rect(pygame.display.get_surface(), (0, 255, 0), self.rect)
 
         
 

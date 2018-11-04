@@ -18,7 +18,7 @@ class Game:
     def __init__(self):
         pygame.init()
         screen = pygame.display.set_mode((self.width, self.height))
-        pygame.display.set_caption('Pizza Game')
+        pygame.display.set_caption('Wegmans Game')
 
         recipeName, ingredients = self.genRecipe()
         print(recipeName)

@@ -63,9 +63,6 @@ class Game:
             self.done = True
         if passKey == pygame.K_UP or passKey == pygame.K_DOWN or passKey == pygame.K_LEFT or passKey == pygame.K_RIGHT:
             self.p.move(passKey)
-            
-
-            
 
 def main():
     Game()

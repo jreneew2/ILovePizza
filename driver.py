@@ -35,9 +35,9 @@ class Game:
         playerSprite = pygame.sprite.RenderPlain(self.p)
         self.p.draw(screen)
 
-        self.e = Enemy()
-        enemySprite = pygame.sprite.RenderPlain(self.e)
-        self.e.draw(screen)
+        #self.e = Enemy()
+        #enemySprite = pygame.sprite.RenderPlain(self.e)
+        #self.e.draw(screen)
 
         self.s1 = Shelf(0)
         self.s2 = Shelf(1)
@@ -63,6 +63,7 @@ class Game:
         buttonYes.setCords(200, 200)
         buttonNo.setCords(600, 200)
 
+        winner = 1
         
         myfont = pygame.font.SysFont('Times New Roman MS', 30)
         recipeTitle = myfont.render(recipeName, 0, (255, 50, 255))
@@ -73,7 +74,7 @@ class Game:
             itemsOnShelf.append(Item(self.s1.rect, self.s2.rect, self.s3.rect, self.s4.rect))
 
         lengthOfIngredients = len(itemsOnShelf)
-
+        lengthOfIngredients = lengthOfIngredients + 1
         for k, v in ingredients.items():
             ingredientsText.append(myfont.render(k + ": $" + str(v), 0, (0, 255, 0)))
 
@@ -98,8 +99,8 @@ class Game:
             self.p.input(keystate[pygame.K_w], keystate[pygame.K_s], keystate[pygame.K_a], keystate[pygame.K_d])
             self.p.calc_pos(timedelta, shelves)
             self.p.draw(screen)
-            self.e.calc_pos(timedelta)
-            self.e.draw(screen)
+            #self.e.calc_pos(timedelta)
+            #self.e.draw(screen)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.done = True
@@ -114,6 +115,7 @@ class Game:
                 index.draw(screen, (item.posX, item.posY))
             if(itemFound):
                 if itemsOnShelf:
+                    lengthOfIngredients = lengthOfIngredients - 1
                     index = random.choice(itemsOnShelf)
                     itemsOnShelf.remove(index)
                     ingredientsText.pop(0)
@@ -121,29 +123,25 @@ class Game:
                 else:
                     if(not self.winnerFlag):
                         recordTime = self.timer
-                        winner = myfont.render('You completed a level in ' + str(recordTime)[0:4] + ' seconds! Nice! Would you like to play another level?' , 0, (0, 0, 0))
-                        screen.blit(winner, (0, self.height / 2))
+                        winner = myfont.render('You completed a level in ' + str(recordTime)[0:4] + ' seconds! Nice! Would you like to play another level? Y or N' , 0, (0, 0, 0))
+                        screen.blit(winner, (0, self.height - 75))
                         self.winnerFlag = True
                     else:
-                        screen.blit(winner, (0, self.height / 2))
-                        buttonNo.draw(screen)
-                        buttonYes.draw(screen)
-                        for event in pygame.event.get():
-                            if event.type == pygame.MOUSEBUTTONDOWN:
-                                mouse = pygame.mouse.get_pos()
-                                if buttonYes.pressed(mouse):
-                                    self.__init__()
-                                if buttonNo.pressed(mouse):
-                                    print("NO")
-                                    self.done = True
+                        screen.blit(winner, (0, self.height - 75))
+                        if(keystate[pygame.K_y]):
+                            self.__init__
+                        if(keystate[pygame.K_n]):
+                            self.done = True
 
                     #self.done = true
             if(keystate[pygame.K_SPACE] and (rect_distance(self.p.rect, index.rect) < 30)):
                     itemFound = True
 
+            itemslefttext = myfont.render('Items left: ' + str(lengthOfIngredients), 0, (0, 0, 0))
+            screen.blit(itemslefttext, (self.width - 150, 10))
             screen.blit(recipeTitle, (10, 10))
             x = 30
-            for text in ingredientsText[0:lengthOfIngredients]:
+            for text in ingredientsText[0:1]:
                 screen.blit(text, (10, x))
                 x = x + 30
             pygame.display.update()

@@ -63,6 +63,11 @@ class Game:
             ingredientsText.append(myfont.render(k + ": $" + str(v), 0, (255, 50, 20)))
             itemsOnShelf.append(Item(self.s1.rect, self.s2.rect, self.s3.rect, self.s4.rect))
 
+        lengthOfIngredients = len(itemsOnShelf)
+
+        for k, v in ingredients.items():
+            ingredientsText.append(myfont.render(k + ": $" + str(v), 0, (0, 255, 0)))
+
         for item in itemsOnShelf:
             item.findValidPos()
 
@@ -97,6 +102,7 @@ class Game:
                 if itemsOnShelf:
                     index = random.choice(itemsOnShelf)
                     itemsOnShelf.remove(index)
+                    ingredientsText.pop(0)
                     itemFound = False
                 else:
                     self.done = True
@@ -105,7 +111,7 @@ class Game:
 
             screen.blit(recipeTitle, (10, 10))
             x = 30
-            for text in ingredientsText:
+            for text in ingredientsText[0:lengthOfIngredients]:
                 screen.blit(text, (10, x))
                 x = x + 30
             pygame.display.update()

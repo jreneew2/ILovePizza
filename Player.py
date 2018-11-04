@@ -101,7 +101,6 @@ class Player(pygame.sprite.Sprite):
 
         for shelf in shelfs:
             retVal = collide(self.rect, shelf.rect)
-            print(retVal)
             if(retVal == 'top'):
                 if(self.velY < 0):
                     self.velY = 0

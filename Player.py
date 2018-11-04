@@ -22,6 +22,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = 100
         self.rect.y = 100
         self.speed = 500
+        self.diagspeed = 354
 
         self.area = screen.get_rect()
 
@@ -61,18 +62,26 @@ class Player(pygame.sprite.Sprite):
             self.image, self.rect = load_png('playertr.png')
             self.rect.x = previousRect.x
             self.rect.y = previousRect.y
+            self.velX = self.diagspeed
+            self.velY = -self.diagspeed
         elif(up and left):
             self.image, self.rect = load_png('playertl.png')
             self.rect.x = previousRect.x
             self.rect.y = previousRect.y
+            self.velX = -self.diagspeed
+            self.velY = -self.diagspeed
         elif(down and left):
             self.image, self.rect = load_png('playerdl.png')
             self.rect.x = previousRect.x
             self.rect.y = previousRect.y
+            self.velX = -self.diagspeed
+            self.velY = self.diagspeed
         elif(down and right):
             self.image, self.rect = load_png('playerdr.png')
             self.rect.x = previousRect.x
-            self.rect.y = previousRect.y          
+            self.rect.y = previousRect.y
+            self.velX = self.diagspeed
+            self.velY = self.diagspeed       
 
     def calc_pos(self, deltatime):
         if(self.rect.right > self.area.width or self.rect.left < 0):
@@ -100,7 +109,7 @@ class Player(pygame.sprite.Sprite):
 
     def draw(self, screen): 
         screen.blit(self.image, (self.posX - self.image.get_width() / 2, self.posY - self.image.get_height() / 2))
-        pygame.draw.rect(pygame.display.get_surface(), (0, 255, 0), self.rect, 2)
+        #pygame.draw.rect(pygame.display.get_surface(), (0, 255, 0), self.rect, 2)
 
         
 

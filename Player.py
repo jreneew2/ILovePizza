@@ -78,13 +78,19 @@ class Player(pygame.sprite.Sprite):
 
     def calc_pos(self, deltatime):
         if(self.rect.right > self.area.width or self.rect.left < 0):
-            print('left: ' + str(self.rect.left))
-            print('right: ' + str(self.rect.right))
-            self.velX = 0
+            if(self.rect.right > self.area.width):
+                if(self.velX > 0):
+                    self.velX = 0
+            if(self.rect.left < 0):
+                if(self.velX < 0):
+                    self.velX = 0
         if(self.rect.bottom > self.area.height or self.rect.top < 0):
-            print('top: ' + str(self.rect.top))
-            print('bottom: ' + str(self.rect.bottom))
-            self.velY = 0
+            if(self.rect.bottom > self.area.height):
+                if(self.velY > 0):
+                    self.velY = 0
+            if(self.rect.top < 0):
+                if(self.velY < 0):
+                    self.velY = 0
 
         self.velX = self.velX + self.accX * deltatime
         self.velY = self.velY + self.accY * deltatime
